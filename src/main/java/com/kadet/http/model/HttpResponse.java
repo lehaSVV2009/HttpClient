@@ -22,6 +22,20 @@ public class HttpResponse {
         this.headers = new HashMap<String, String>();
     }
 
+    public void addHeader (String name, String value) {
+        headers.put(name, value);
+    }
+
+    @Override
+    public String toString() {
+        return "HttpResponse{" +
+                "status=" + status +
+                ", description='" + description + '\'' +
+                ", headers=" + headers +
+                ", body='" + body + '\'' +
+                '}';
+    }
+
     public int getStatus() {
         return status;
     }
@@ -36,16 +50,6 @@ public class HttpResponse {
 
     public String getBody() {
         return body;
-    }
-
-    @Override
-    public String toString() {
-        return "HttpResponse{" +
-                "status=" + status +
-                ", description='" + description + '\'' +
-                ", headers=" + headers +
-                ", body='" + body + '\'' +
-                '}';
     }
 
     public String getFullResponse() {
@@ -68,7 +72,4 @@ public class HttpResponse {
         this.body = body;
     }
 
-    public void setFullResponse(String fullResponse) {
-        this.fullResponse = fullResponse;
-    }
 }

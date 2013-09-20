@@ -2,6 +2,8 @@ package com.kadet.http.model;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -18,6 +20,14 @@ public class HttpClient {
         return receiveResponse(socket.getInputStream());
     }
 
+    public int receivePort (HttpRequest request) {
+        int port = request.getPort();
+        if (port == -1) {
+            port = 80;
+        }
+        return port;
+    }
+
     private void sendRequest (HttpRequest request, OutputStream outputStream) {
         String query = request.getQueryString();
         PrintWriter writer = new PrintWriter(outputStream);
@@ -27,25 +37,52 @@ public class HttpClient {
 
     private HttpResponse receiveResponse (InputStream inputStream) throws IOException {
         HttpResponse response = new HttpResponse();
-        BufferedReader in = new BufferedReader(new InputStreamReader(inputStream));
-
-        String inputLine;
-        StringBuilder answer = new StringBuilder();
-        while ((inputLine = in.readLine()) != null) {
-            answer.append(inputLine).append("\n");
-        }
-
-        in.close();
-        response.setBody(answer.toString());
+        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+        String statusLine = reader.readLine();
+        response.setStatus(receiveStatusFromStatusLine(statusLine));
+        response.setDescription(receiveDescriptionFromStatusLine(statusLine));
+        response.setHeaders(receiveHeaders(reader));
+        response.setBody(receiveBody(reader));
+        reader.close();
         return response;
     }
 
-    public int receivePort (HttpRequest request) {
-        int port = request.getPort();
-        if (port == -1) {
-            port = 80;
+
+    private int receiveStatusFromStatusLine(String statusLine) {
+        try {
+            int status = Integer.parseInt(statusLine.substring(9, 12));
+            return status;
+        } catch (NumberFormatException nfe) {
+            return -1;
         }
-        return port;
+    }
+
+    private String receiveDescriptionFromStatusLine(String statusLine) {
+        return statusLine.substring(13);
+    }
+
+    private Map<String, String> receiveHeaders (BufferedReader reader) throws IOException {
+        Map<String, String> headers = new HashMap<String, String>();
+        String line;
+        do {
+            line = reader.readLine();
+            if(line != null && line.length() != 0){
+                String separator = ": ";
+                String name = line.substring(0, line.indexOf(separator));
+                String value = line.substring(line.indexOf(separator) + separator.length());
+                headers.put(name, value);
+            }
+        } while (line != null && line.length() != 0);
+        return headers;
+    }
+
+    private String receiveBody (BufferedReader reader) throws IOException {
+        StringBuilder answer = new StringBuilder();
+        String line;
+        while ((line = reader.readLine()) != null) {
+            answer.append(line).append("\n");
+        }
+        return answer.toString();
     }
 
 }

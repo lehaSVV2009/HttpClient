@@ -1,7 +1,7 @@
 package com.kadet.http.model;
 
-import java.io.InputStream;
-import java.io.OutputStream;
+import com.kadet.http.util.HttpDefaults;
+
 import java.net.URL;
 
 /**
@@ -26,7 +26,12 @@ public class HttpHead extends HttpRequest{
 
     @Override
     public String getQueryString() {
-        return "";
+        StringBuilder query = new StringBuilder();
+        query.append(HEAD_METHOD).append(" ").append(url.toExternalForm()).append(" ").append(HttpDefaults.HTTP).append("\r\n");
+        query.append("HOST: ").append(getHost()).append("\r\n");
+        query.append("Connection: ").append("keep-alive").append("\r\n");
+        query.append("\r\n");
+        return query.toString();
     }
 
 

@@ -19,12 +19,10 @@ public abstract class HttpRequest {
 
     protected URL url;
     protected String method;
-    protected Map<String, String> params;
 
     public HttpRequest (URL url) {
         this.initMethod();
         this.url = url;
-        this.params = new HashMap<String, String>();
     }
 
     public String getHost () {
@@ -45,7 +43,6 @@ public abstract class HttpRequest {
         return "HttpRequest{" +
                 "url=" + url +
                 ", method='" + method + '\'' +
-                ", params=" + params +
                 '}';
     }
 
