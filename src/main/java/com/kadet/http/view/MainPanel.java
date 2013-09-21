@@ -19,8 +19,11 @@ public class MainPanel extends JPanel {
 
     private final static String SEND_REQUEST_TEXT = "Send Request";
     private final static String POST_PARAMETER_TEXT = "POST Parameter: ";
+    private final static String URL_TEXT = "Url: ";
 
     private final static java.util.List<String> methods = new ArrayList<String>();
+    private final static java.util.List<String> urls = new ArrayList<String>();
+
 
     static {
         methods.add("GET");
@@ -28,7 +31,13 @@ public class MainPanel extends JPanel {
         methods.add("HEAD");
     }
 
-    private JLabel headLabel;
+    static {
+        urls.add("http://www.spaces.ru/");
+        urls.add("http://spaces.ru/search/?sid=2201168027516682");
+    }
+
+    private JLabel urlLabel;
+    private JComboBox urlsComboBox;
     private JLabel postParameterLabel;
     private JTextField postParameterTextField;
     private JComboBox methodsComboBox;
@@ -50,11 +59,17 @@ public class MainPanel extends JPanel {
 
 
     private void adjustAllElements () {
+        adjustUrlsField();
         adjustPostParameterField();
         adjustMethodsComboBox();
         adjustHTMLArea();
         adjustLoggerArea();
         adjustSendButton();
+    }
+
+    private void adjustUrlsField() {
+        urlLabel = new JLabel(URL_TEXT);
+        urlsComboBox = new JComboBox(urls.toArray());
     }
 
     private void adjustPostParameterField () {
@@ -76,9 +91,8 @@ public class MainPanel extends JPanel {
 
     private void adjustHTMLArea() {
         htmlArea = new JEditorPane();
-//        htmlArea.setContentType("text/html");
         htmlArea.setEditable(false);
-        htmlArea.setText("<html><body>Html здесь</body></html>");
+        htmlArea.setText("<html><body>Html будет здесь</body></html>");
     }
 
     private void adjustLoggerArea () {
@@ -94,20 +108,20 @@ public class MainPanel extends JPanel {
         loggerScrollPane.setPreferredSize(new Dimension(400, 800));
         add(loggerScrollPane, BorderLayout.EAST);
         add(createBrowserPanel(), BorderLayout.CENTER);
-        repaint();
-        revalidate();
     }
 
     private JPanel createBrowserPanel () {
         JPanel browserPanel = new JPanel();
-        browserPanel.setLayout(new BoxLayout(browserPanel, BoxLayout.Y_AXIS));
-        browserPanel.add(createDataInputPanel());
-        browserPanel.add(new JScrollPane(htmlArea));
+        browserPanel.setLayout(new BorderLayout());
+        browserPanel.add(createDataInputPanel(), BorderLayout.NORTH);
+        browserPanel.add(new JScrollPane(htmlArea), BorderLayout.CENTER);
         return browserPanel;
     }
 
     private JPanel createDataInputPanel () {
         JPanel dataInputPanel = new JPanel();
+        dataInputPanel.add(urlLabel);
+        dataInputPanel.add(urlsComboBox);
         dataInputPanel.add(postParameterLabel);
         dataInputPanel.add(postParameterTextField);
         dataInputPanel.add(methodsComboBox);
@@ -126,5 +140,9 @@ public class MainPanel extends JPanel {
 
     public JTextField getPostParameterTextField() {
         return postParameterTextField;
+    }
+
+    public JComboBox getUrlsComboBox() {
+        return urlsComboBox;
     }
 }

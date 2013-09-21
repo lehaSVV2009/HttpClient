@@ -43,21 +43,4 @@ public class HttpGet extends HttpRequest {
         return query.toString();
     }
 
-    /*@Override
-    public void sendData(OutputStream outputStream) {
-        PrintWriter writer = new PrintWriter(outputStream);
-        writer.println(GET_METHOD + " " + url.toExternalForm() + " ");
-        writer.println("HOST " + getHost());
-        writer.println("Connection: " + "keep-alive");
-        writer.println("Cache-Control: " + "max-age=0");
-        writer.println("User-Agent: " + "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/29.0.1547.66 Safari/537.36");
-        writer.println("Referer: " + url.toExternalForm());
-        writer.println("Accept-Encoding: " + "gzip,deflate,sdch");
-        writer.println("Accept-Language:" + "ru-RU,ru;q=0.8,en-US;q=0.6,en;q=0.4");
-        writer.println("Cookie: " + "sid=0433465259137125; __utma=168332643.1558675713.1379615216.1379615216.1379615216.1; __utmb=168332643.3.10.1379615216; __utmc=168332643; __utmz=168332643.1379615216.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none)");
-        writer.println();
-        writer.flush();
-    }    */
-
-
 }
