@@ -79,7 +79,7 @@ public class HttpPost extends HttpRequest {
         query.append("Referer: ").append(url.toExternalForm()).append("\r\n");
         query.append("Accept-Encoding: ").append("gzip,deflate,sdch").append("\r\n");
         query.append("Accept-Language:").append("ru-RU,ru;q=0.8,en-US;q=0.6,en;q=0.4").append("\r\n");
-        query.append("Cookie: ").append("sid=2623137414319723; __utma=168332643.1558675713.1379615216.1379699127.1379717250.3; __utmb=168332643.5.10.1379717250; __utmc=168332643; __utmz=168332643.1379615216.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none)").append("\r\n");
+        query.append("Cookie: ").append("sid=2201168027516682; __utma=168332643.1558675713.1379615216.1379757773.1379761556.5; __utmb=168332643.1.10.1379761556; __utmc=168332643; __utmz=168332643.1379615216.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none)").append("\r\n");
         query.append("\r\n");
         query.append(paramsString);
 

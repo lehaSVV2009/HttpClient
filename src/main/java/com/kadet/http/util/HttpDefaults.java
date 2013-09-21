@@ -10,4 +10,8 @@ package com.kadet.http.util;
 public final class HttpDefaults {
 
     public final static String HTTP = "HTTP/1.0";
+
+    public final String POST_METHOD = "POST";
+    public final String HEAD_METHOD = "HEAD";
+
 }

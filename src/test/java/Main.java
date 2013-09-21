@@ -8,6 +8,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Random;
 
 /**
  * Created with IntelliJ IDEA.
@@ -20,16 +21,16 @@ public class Main {
 
     public static void main (String []args) {
 
-/*
+
         JFrame frame = new MainFrame();
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-*/
 
 
-        testHead();
-        testGet();
-        testPost();
+
+       // testHead();
+       // testGet();
+//        testPost();
     }
 
     public static void testHead () {
@@ -84,11 +85,11 @@ public class Main {
     public static void testPost () {
         HttpClient client = new HttpClient();
         try {
-            URL url = new URL("http://www.spaces.ru/search/?sid=2623137414319723");
+            URL url = new URL("http://spaces.ru/search/?sid=2201168027516682");
             Map<String, String> params = new LinkedHashMap<String, String>();
             params.put("sid", "");
-            params.put("CK", "421060658161060");
-            params.put("link_id", "1050390");
+            params.put("CK","440498432078011");
+            params.put("link_id", "1210763");
             params.put("from", "");
             params.put("q", "lopez");
             params.put("cfms", "Найти");
