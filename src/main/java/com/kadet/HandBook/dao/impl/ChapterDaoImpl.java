@@ -4,10 +4,7 @@ import com.kadet.HandBook.dao.ChapterDao;
 import com.kadet.HandBook.entity.Chapter;
 import com.kadet.HandBook.util.MysqlManager;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -78,18 +75,123 @@ public class ChapterDaoImpl implements ChapterDao {
         return null;
     }
 
+
+    private String createSaveQuery (String tableName, String []columnNames) {
+        StringBuilder query = new StringBuilder();
+        query.append("INSERT INTO ")
+                .append(tableName)
+                .append("(")
+                .append(columnNames[0]);
+        for (int columnNum = 1; columnNum < columnNames.length; ++columnNum) {
+            query.append(", ")
+                    .append(columnNames[columnNum]);
+        }
+        query.append(") VALUES(?");
+        for (int columnNum = 1; columnNum < columnNames.length; ++columnNum) {
+            query.append(",?");
+        }
+        query.append(")");
+        return query.toString();
+    }
+
     @Override
     public int save(Chapter chapter) {
-        return 0;  //To change body of implemented methods use File | Settings | File Templates.
+        int result = -1;
+        String query = createSaveQuery(
+                TABLE_NAME,
+                COLUMN_NAMES
+        );
+        try {
+            Connection connection = MysqlManager.getInstance().getConnection();
+            PreparedStatement statement
+                    = connection.prepareStatement(query);
+            statement.setInt(1, chapter.getId());
+            statement.setString(2, chapter.getTitle());
+            statement.setString(3, chapter.getText());
+            result = statement.executeUpdate();
+            statement.close();
+            connection.close();
+        } catch (SQLException e) {
+            result = -1;
+            MysqlManager.log(e);
+        }
+        return result;
     }
+
+    private String createUpdateQuery (String tableName, String []columnNames, String idColumnName) {
+        StringBuilder query = new StringBuilder();
+        query.append("UPDATE ")
+                .append(tableName)
+                .append(" SET ")
+                .append(columnNames[0])
+                .append(" = ? ");
+        for (int columnNum = 1; columnNum < columnNames.length; ++columnNum) {
+            query.append(", ")
+                    .append(columnNames[columnNum])
+                    .append(" = ? ");
+        }
+        query.append(" WHERE ")
+                .append(idColumnName)
+                .append(" = ?");
+        return query.toString();
+    }
+
 
     @Override
     public int update(Chapter chapter) {
-        return 0;  //To change body of implemented methods use File | Settings | File Templates.
+        int result = -1;
+        String query = createUpdateQuery(
+                TABLE_NAME,
+                COLUMN_NAMES,
+                COLUMN_NAMES[0]
+        );
+        try {
+            Connection connection = MysqlManager.getInstance().getConnection();
+            PreparedStatement statement
+                    = connection.prepareStatement(query);
+            statement.setInt(1, chapter.getId());
+            statement.setString(2, chapter.getTitle());
+            statement.setString(3, chapter.getText());
+            statement.setInt(4, chapter.getId());
+            result = statement.executeUpdate();
+            statement.close();
+            connection.close();
+        } catch (SQLException e) {
+            result = -1;
+            MysqlManager.log(e);
+        }
+        return result;
     }
 
-    @Override
-    public int delete(Chapter chapter) {
-        return 0;  //To change body of implemented methods use File | Settings | File Templates.
+    private String createDeleteQuery (String tableName, String idColumnName) {
+        StringBuilder query = new StringBuilder();
+        query.append("DELETE FROM ")
+                .append(tableName)
+                .append(" WHERE ")
+                .append(idColumnName)
+                .append(" = ? ");
+        return query.toString();
     }
+
+    public int delete (Chapter chapter) {
+        int result = -1;
+        String query = createDeleteQuery(TABLE_NAME, COLUMN_NAMES[0]);
+        try {
+            Connection connection = MysqlManager.getInstance().getConnection();
+            PreparedStatement statement
+                    = connection.prepareStatement(query);
+            statement.setInt(1, chapter.getId());
+            result = statement.executeUpdate();
+            statement.close();
+            connection.close();
+        } catch (SQLException e) {
+            result = -1;
+            MysqlManager.log(e);
+        }
+        return result;
+    }
+
+
+
+
 }

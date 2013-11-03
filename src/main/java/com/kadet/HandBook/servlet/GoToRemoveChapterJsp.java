@@ -13,17 +13,17 @@ import java.io.IOException;
 /**
  * Created with IntelliJ IDEA.
  * User: Кадет
- * Date: 22.10.13
- * Time: 12:29
+ * Date: 28.10.13
+ * Time: 13:00
  * To change this template use File | Settings | File Templates.
  */
-@WebServlet(urlPatterns = "/openChapter")
-public class OpenChapterServlet extends HttpServlet {
+@WebServlet(urlPatterns = "/goToRemoveChapter")
+public class GoToRemoveChapterJsp extends HttpServlet{
 
-    private ChapterController chapterController = new ChapterControllerImpl();
+    private ChapterController controller = new ChapterControllerImpl();
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        chapterController.openChapter(request, response);
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        controller.goToRemoveChapter(req, resp);
     }
 }

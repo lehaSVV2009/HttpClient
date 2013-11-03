@@ -11,5 +11,8 @@ public final class DataStrings {
 
     public final static String INDEX_JSP = "index.jsp";
     public final static String MAIN_JSP = "main.jsp";
+    public final static String ADD_CHAPTER_JSP = "addChapter.jsp";
+    public final static String REMOVE_CHAPTER_JSP = "removeChapter.jsp";
+    public final static String EDIT_CHAPTER_JSP = "editChapter.jsp";
 
 }

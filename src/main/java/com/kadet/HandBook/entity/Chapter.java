@@ -13,6 +13,15 @@ public class Chapter implements Entity{
     private String title;
     private String text;
 
+    public Chapter() {
+    }
+
+    public Chapter(Integer id, String title, String text) {
+        this.id = id;
+        this.title = title;
+        this.text = text;
+    }
+
     public Integer getId() {
         return id;
     }

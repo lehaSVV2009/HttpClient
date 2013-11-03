@@ -13,5 +13,10 @@ import javax.servlet.http.HttpServletResponse;
 public interface ChapterController {
 
     public void openChapter (HttpServletRequest request, HttpServletResponse response);
+    public void addChapter (HttpServletRequest request, HttpServletResponse response);
+    public void removeChapter (HttpServletRequest request, HttpServletResponse response);
+    public void editChapter (HttpServletRequest request, HttpServletResponse response);
+    public void goToEditChapter (HttpServletRequest request, HttpServletResponse response);
+    public void goToRemoveChapter (HttpServletRequest request, HttpServletResponse response);
 
 }
